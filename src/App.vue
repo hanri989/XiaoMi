@@ -5,5 +5,5 @@
 </template>
 
 <style>
-
+@import './assets/scss/reset.scss'
 </style>
