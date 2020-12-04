@@ -27,29 +27,23 @@
           <a href=""></a>
         </div>
         <div class="nav">
-          <div class="nav-item">
+          <div class="nav-item" @mouseover="hover" @mouseleave="leave">
             <span>小米手机</span>
-            <div class="children"></div>
           </div>
-          <div class="nav-item">
+          <div class="nav-item" >
             <span>Redmi红米</span>
-            <div class="children"></div>
           </div>
-          <div class="nav-item">
+          <div class="nav-item" @mouseover="hover" @mouseleave="leave">
             <span>电视</span>
-            <div class="children"></div>
           </div>
           <div class="nav-item">
             <span>笔记本</span>
-            <div class="children"></div>
           </div>
           <div class="nav-item">
             <span>家电</span>
-            <div class="children"></div>
           </div>
           <div class="nav-item">
             <span>路由器</span>
-            <div class="children"></div>
           </div>
           <div class="nav-item">
             <span>服务</span>
@@ -62,6 +56,64 @@
           <input type="text" placeholder="请输入搜索内容">
           <a href="javascript:;"></a>
         </div>
+        <div id="navMenu" v-show="isActive">
+          <ul>
+            <li class="product">
+              <a href="">
+                <div class="img">
+                  <img src="https://cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/f515ab05232ed14ccd78ec67e024495a.png" alt="">
+                </div>
+                <div class="title">小米cc9</div>
+                <p class="price">1799元起</p>
+              </a>
+            </li>
+            <li class="product">
+              <a href="">
+                <div class="img">
+                  <img src="https://cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/f515ab05232ed14ccd78ec67e024495a.png" alt="">
+                </div>
+                <div class="title">小米cc9</div>
+                <p class="price">1799元起</p>
+              </a>
+            </li>
+            <li class="product">
+              <a href="">
+                <div class="img">
+                  <img src="https://cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/f515ab05232ed14ccd78ec67e024495a.png" alt="">
+                </div>
+                <div class="title">小米cc9</div>
+                <p class="price">1799元起</p>
+              </a>
+            </li>
+            <li class="product">
+              <a href="">
+                <div class="img">
+                  <img src="https://cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/f515ab05232ed14ccd78ec67e024495a.png" alt="">
+                </div>
+                <div class="title">小米cc9</div>
+                <p class="price">1799元起</p>
+              </a>
+            </li>
+            <li class="product">
+              <a href="">
+                <div class="img">
+                  <img src="https://cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/f515ab05232ed14ccd78ec67e024495a.png" alt="">
+                </div>
+                <div class="title">小米cc9</div>
+                <p class="price">1799元起</p>
+              </a>
+            </li>
+            <li class="product">
+              <a href="">
+                <div class="img">
+                  <img src="https://cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/f515ab05232ed14ccd78ec67e024495a.png" alt="">
+                </div>
+                <div class="title">小米cc9</div>
+                <p class="price">1799元起</p>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -69,7 +121,19 @@
 
 <script>
 export default {
-
+  data() {
+    return {
+      isActive: false
+    }
+  },
+  methods: {
+    hover() {
+      this.isActive = true
+    },
+    leave() {
+      this.isActive = false
+    }
+  }
 }
 </script>
 
@@ -136,6 +200,7 @@ export default {
       height: 100px;
       line-height: 100px;
       margin: 0 auto;
+      position: relative;
       .logo{
         width: 55px;
         height: 55px;
@@ -203,6 +268,45 @@ export default {
             background-color: #ff6700;
             color: #fff;
             transition: all .2s;
+          }
+        }
+      }
+      #navMenu{
+        position: absolute;
+        top: 100px;
+        width: 1226px;
+        height: 230px;
+        box-shadow: 0 5px 6px 0 rgba(0,0,0,.11);
+        .product{
+          float: left;
+          font-size: 12px;
+          padding: 35px 12px 0;
+          text-align: center;
+          line-height: 20px;
+          position: relative;
+          &::after{
+            content: '';
+            position: absolute;
+            top: 40px;
+            right: 0;
+            width: 1px;
+            height: 100px;
+            border-left: 1px solid #e0e0e0;
+          }
+          &:last-child::after{
+            display: none;
+          }
+          img{
+            height: 110px;
+            width: 160px;
+          }
+          .title{
+            color: #333;
+            font-weight: bold;
+            margin-top: 5px;
+          }
+          .price{
+            color:#ff6700
           }
         }
       }
