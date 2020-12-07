@@ -122,7 +122,7 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style lang='scss'>
   .topHeader{
     height: 40px;
     line-height: 40px;
@@ -261,9 +261,13 @@ export default {
         top: 100px;
         width: 1226px;
         height: 230px;
+        background: #fff;
         box-shadow: 0 5px 6px 0 rgba(0,0,0,.11);
+        z-index: 3;
         .product{
           float: left;
+          box-sizing: border-box;
+          width: 16.5%;
           font-size: 12px;
           padding: 35px 12px 0;
           text-align: center;
