@@ -16,8 +16,10 @@
           <a href="javascript:;">用户协议</a>
         </div>
         <div class="rightHeader">
-          <a href="">登录</a>
-          <a href="" class="car"><span></span>购物车(0)</a>
+          <a href="javascript:;" v-if="username">{{username}}</a>
+          <a href="" v-else @click.prevent="login">登录</a>
+          <a href="">我的订单</a>
+          <a href="" class="car" @click.prevent="goToCart"><span></span>购物车(0)</a>
         </div>
       </div>
     </div>
@@ -27,13 +29,13 @@
           <a href=""></a>
         </div>
         <div class="nav">
-          <div class="nav-item" @mouseover="hover" @mouseleave="leave">
+          <div class="nav-item" @mouseover="hover">
             <span>小米手机</span>
           </div>
           <div class="nav-item" >
             <span>Redmi红米</span>
           </div>
-          <div class="nav-item" @mouseover="hover" @mouseleave="leave">
+          <div class="nav-item" @mouseover="hover">
             <span>电视</span>
           </div>
           <div class="nav-item">
@@ -45,10 +47,10 @@
           <div class="nav-item">
             <span>路由器</span>
           </div>
-          <div class="nav-item">
+          <div class="nav-item" @mouseover="leave">
             <span>服务</span>
           </div>
-          <div class="nav-item">
+          <div class="nav-item" @mouseover="leave">
             <span>社区</span>
           </div>
         </div>
@@ -56,60 +58,15 @@
           <input type="text" placeholder="请输入搜索内容">
           <a href="javascript:;"></a>
         </div>
-        <div id="navMenu" v-show="isActive">
+        <div id="navMenu" v-show="isActive" @mouseleave="leave">
           <ul>
-            <li class="product">
-              <a href="">
+            <li class="product" v-for="(item, index) of phoneList" :key="index">
+              <a :href="'/#/product/'+item.id">
                 <div class="img">
-                  <img src="https://cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/f515ab05232ed14ccd78ec67e024495a.png" alt="">
+                  <img :src="item.mainImage" :alt="item.subtitle">
                 </div>
-                <div class="title">小米cc9</div>
-                <p class="price">1799元起</p>
-              </a>
-            </li>
-            <li class="product">
-              <a href="">
-                <div class="img">
-                  <img src="https://cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/f515ab05232ed14ccd78ec67e024495a.png" alt="">
-                </div>
-                <div class="title">小米cc9</div>
-                <p class="price">1799元起</p>
-              </a>
-            </li>
-            <li class="product">
-              <a href="">
-                <div class="img">
-                  <img src="https://cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/f515ab05232ed14ccd78ec67e024495a.png" alt="">
-                </div>
-                <div class="title">小米cc9</div>
-                <p class="price">1799元起</p>
-              </a>
-            </li>
-            <li class="product">
-              <a href="">
-                <div class="img">
-                  <img src="https://cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/f515ab05232ed14ccd78ec67e024495a.png" alt="">
-                </div>
-                <div class="title">小米cc9</div>
-                <p class="price">1799元起</p>
-              </a>
-            </li>
-            <li class="product">
-              <a href="">
-                <div class="img">
-                  <img src="https://cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/f515ab05232ed14ccd78ec67e024495a.png" alt="">
-                </div>
-                <div class="title">小米cc9</div>
-                <p class="price">1799元起</p>
-              </a>
-            </li>
-            <li class="product">
-              <a href="">
-                <div class="img">
-                  <img src="https://cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/f515ab05232ed14ccd78ec67e024495a.png" alt="">
-                </div>
-                <div class="title">小米cc9</div>
-                <p class="price">1799元起</p>
+                <div class="title">{{item.name}}</div>
+                <p class="price">{{item.price | currency}}</p>
               </a>
             </li>
           </ul>
@@ -123,7 +80,9 @@
 export default {
   data() {
     return {
-      isActive: false
+      isActive: false,
+      phoneList: [],
+      username: ''
     }
   },
   methods: {
@@ -132,7 +91,33 @@ export default {
     },
     leave() {
       this.isActive = false
+    },
+    getProductList() {
+      this.axios.get('/products', {
+        params: {
+          categoryId: '100012'
+        }
+      }).then((res) => {
+        if(res.list.length > 6) {
+          this.phoneList = res.list.splice(0, 6)
+        }
+      })
+    },
+    goToCart() {
+      this.$router.push("/cart")
+    },
+    login() {
+      this.$router.push('/login')
     }
+  },
+  filters: {
+    currency(val) {
+      if(!val) return "0.00";
+      return '￥' + val.toFixed(2) + '元'
+    }
+  },
+  mounted() {
+    this.getProductList()
   }
 }
 </script>

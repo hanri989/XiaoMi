@@ -4,23 +4,20 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import env from './env'
 
 Vue.use(VueAxios, axios);
 
 axios.defaults.baseURL = '/api';
 axios.defaults.timeout = 8000;
 
-axios.defaults.baseURL = env.baseURL;
-
-
 axios.interceptors.response.use(config => {
-    if (config.status == 0) {
-        return config.data
-    } else if (config.status == 10) {
+    let res = config.data;
+    if (res.status == 0) {
+        return res.data
+    } else if (res.status == 10) {
         window.location.href = '/#/login'
     } else {
-        alert(config.msg)
+        alert(res.msg)
     }
 }, )
 
