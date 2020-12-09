@@ -32,6 +32,9 @@ export default {
         display: inline-block;
         width: 24.8%;
         border-right: 1px solid #e5e5e5;
+        &:last-child{
+          border-right: 0;
+        }
         span{
           display: inline-block;
           width: 20px;
